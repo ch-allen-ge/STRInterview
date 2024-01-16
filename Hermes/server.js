@@ -4,10 +4,16 @@ const express = require('express');
 const passport = require('passport');
 const cors = require('cors');
 const bcrypt = require("bcrypt");
-const { checkNotAuthenticated, checkAuthenticated } = require('./authenticationUtils');
+const {
+  checkNotAuthenticated,
+  checkAuthenticated
+} = require('./authenticationUtils');
 const { registerUser } = require('./controllers/usersController');
 const { createNewUserProfile } = require('./controllers/profileController');
-const { addNewPost } = require('./controllers/postsController');
+const {
+  addNewPost,
+  getAllPosts
+} = require('./controllers/postsController');
 const initializePassport = require('./passport-config');
 const session = require('express-session');
 
@@ -82,6 +88,15 @@ app.post('/addPost', checkAuthenticated, (req, res) => {
     addNewPost(username, postDetails);
 
     res.send();
+  } catch (e) {
+    throw e;
+  }
+});
+
+app.get('/getAllPosts', checkAuthenticated, async (req, res) => {
+  try {
+    const response = await getAllPosts();
+    res.send(response);
   } catch (e) {
     throw e;
   }

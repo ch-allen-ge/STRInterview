@@ -1,4 +1,7 @@
-const { addTheNewPost } = require('../services/posts.service');
+const {
+    addTheNewPost,
+    getAllThePosts
+} = require('../services/posts.service');
 
 const addNewPost = async (username, postDetails) => {
     try {
@@ -9,6 +12,16 @@ const addNewPost = async (username, postDetails) => {
     }
 }
 
+const getAllPosts = async () => {
+    try {
+        const response = await getAllThePosts();
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports = {
-    addNewPost
+    addNewPost,
+    getAllPosts
 }

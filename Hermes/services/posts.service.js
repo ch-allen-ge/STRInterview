@@ -6,6 +6,12 @@ const addTheNewPost = async (username, postDetails) => {
     return await executeQuery(query, values);
 };
 
+const getAllThePosts = async () => {
+    const query = 'select * from posts';
+    return await executeQuery(query);
+}
+
 module.exports = {
-    addTheNewPost
+    addTheNewPost,
+    getAllThePosts
 }
