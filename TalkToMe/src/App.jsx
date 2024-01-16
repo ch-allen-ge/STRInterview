@@ -1,8 +1,11 @@
-import { useState } from 'react'
-import { Button, Stack } from '@mui/material'
+import { useState } from 'react';
+import { Button, Stack } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import './App.css'
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <div className='frontPageContainer'>
       <div>
@@ -14,7 +17,10 @@ function App() {
           <Button variant='contained'>
             Login
           </Button>
-          <Button variant='contained'>
+          <Button
+            variant='contained'
+            onClick={() => {navigate('/register')}}
+          >
             Register
           </Button>
         </Stack>
