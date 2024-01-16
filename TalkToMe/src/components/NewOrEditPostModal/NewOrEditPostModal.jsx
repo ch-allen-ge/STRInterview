@@ -9,13 +9,20 @@ import {
     InputLabel,
     TextField
 } from '@mui/material';
+import { strPost } from '../../axios-config';
 import './newOrEditPostModal.css';
 
 const NewOrEditPostModal = ({modalOpen, handleClose}) => {
     const [source, setSource] = useState('');
+    const [topic, setTopic] = useState('');
+    const [content, setContent] = useState('');
 
     const handleSubmit = () => {
-        //update db
+        strPost('/addPost', {
+            source,
+            topic,
+            content
+        });
         handleClose();
     }
 
@@ -32,7 +39,6 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                         <FormControl>
                             <InputLabel id="source-label">Source</InputLabel>
                             <Select
-                                value={source}
                                 id='source'
                                 onChange={(e) => setSource(e.target.value)}
                             >
@@ -45,9 +51,9 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                             </Select>
                         </FormControl>
                         <br />
-                        <TextField label="Topic" variant="outlined"/>
+                        <TextField label="Topic" variant="outlined" onChange={(e) => {setTopic(e.target.value)}}/>
                         <br />
-                        <TextField label="Content" variant="outlined" multiline maxRows={4}/>
+                        <TextField label="Content" variant="outlined" multiline maxRows={4} onChange={(e) => {setContent(e.target.value)}}/>
                     </FormGroup>
                 </div>
                 <br />

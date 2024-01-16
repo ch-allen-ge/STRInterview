@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const { checkNotAuthenticated, checkAuthenticated } = require('./authenticationUtils');
 const { registerUser } = require('./controllers/usersController');
 const { createNewUserProfile } = require('./controllers/profileController');
+const { addNewPost } = require('./controllers/postsController');
 const initializePassport = require('./passport-config');
 const session = require('express-session');
 
@@ -66,6 +67,24 @@ app.post('/logout', checkAuthenticated, (req, res, next) => {
   res.clearCookie('connect.sid', {
     path: '/'
   }).send();
+});
+
+app.post('/addPost', checkAuthenticated, (req, res) => {
+  try {
+    const username = req.user.username;
+    const postDetails = {
+      postDate: new Date(),
+      source: req.body.source,
+      topic: req.body.topic,
+      content: req.body.content
+    }
+
+    addNewPost(username, postDetails);
+
+    res.send();
+  } catch (e) {
+    throw e;
+  }
 });
 
 app.listen(port, () => {
