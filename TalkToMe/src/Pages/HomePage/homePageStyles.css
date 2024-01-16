@@ -1,0 +1,41 @@
+.homepage {
+    background-color: #495057;
+    height: 100dvh;
+}
+
+.homepageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.makePostContainer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #343a40;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 0.7rem;
+}
+
+.profilePic {
+    width: 2rem;
+    background-color: cornflowerblue;
+    border-radius: 1rem;
+    margin-right: 1rem;
+}
+
+.makePostButton {
+    background-color: #6c757d;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 50vw;
+}
+
+.makePostButton:hover {
+    background-color: #adb5bd;
+}

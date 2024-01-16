@@ -22,7 +22,7 @@ const LoginPage = () => {
         .catch(() => setShowError(true));
 
         if (response && response.status === 200) {
-            navigate('/home');
+            navigate('/home', {state: {username}});
         }
     };
 
