@@ -14,7 +14,10 @@ function App() {
       <h1>Talk To Me</h1>
       <div className="card">
         <Stack spacing={2} direction="row">
-          <Button variant='contained'>
+          <Button
+            variant='contained'
+            onClick={() => {navigate('/login')}}
+          >
             Login
           </Button>
           <Button

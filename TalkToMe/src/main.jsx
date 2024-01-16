@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
+import LoginPage from './Pages/LoginPage/LoginPage'
 import HomePage from './Pages/HomePage/HomePage';
 
 import './index.css';
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomePage />,
+    errorElement: <h1>Error Loading Page</h1>
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
     errorElement: <h1>Error Loading Page</h1>
   },
   {

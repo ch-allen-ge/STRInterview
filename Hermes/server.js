@@ -24,10 +24,6 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.post('/register', checkNotAuthenticated, async(req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -57,6 +53,19 @@ app.post('/register', checkNotAuthenticated, async(req, res) => {
   } catch (e) {
     throw e;
   }
+});
+
+app.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
+  res.send(req.user);
+});
+
+app.post('/logout', checkAuthenticated, (req, res, next) => {
+  req.logOut((err) => {
+    if (err) { return next(err); }
+  });
+  res.clearCookie('connect.sid', {
+    path: '/'
+  }).send();
 });
 
 app.listen(port, () => {
