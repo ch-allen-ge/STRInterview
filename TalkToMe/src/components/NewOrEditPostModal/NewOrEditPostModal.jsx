@@ -40,6 +40,7 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                             <InputLabel id="source-label">Source</InputLabel>
                             <Select
                                 id='source'
+                                defaultValue=""
                                 onChange={(e) => setSource(e.target.value)}
                             >
                                 <MenuItem value={'Zeus'}>Zeus</MenuItem>

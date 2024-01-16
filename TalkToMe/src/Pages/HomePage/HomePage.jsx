@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NewOrEditPostModal from '../../components/NewOrEditPostModal';
 import { strGet } from '../../axios-config';
+import PostsTable from '../../components/PostsTable';
 
 const HomePage = () => {
     const username = useLocation().state.username;
@@ -37,9 +38,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div>
-                
-            </div>
+            <PostsTable allPosts={allPosts}/>
 
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}
