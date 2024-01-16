@@ -1,0 +1,24 @@
+.titleSection {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    background: cornflowerblue;
+}
+
+.titleText {
+    color:aliceblue;
+    cursor: pointer;
+    font-size: xx-large;
+    padding: 10px 0px;
+    margin-left: 30px;
+}
+
+.navbarButtons {
+    position: absolute;
+    right: 30px;
+}
+
+.navButton {
+    color: aliceblue !important;
+    border-color: aliceblue !important;
+}
