@@ -5,12 +5,13 @@ import { useState, useEffect } from 'react';
 import NewOrEditPostModal from '../../components/NewOrEditPostModal';
 import { strGet } from '../../axios-config';
 import PostsTable from '../../components/PostsTable';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const HomePage = () => {
     const username = useLocation().state.username;
 
     const [showNewPostModal, setShowNewPostModal] = useState(false);
-    const [allPosts, setAllPosts] = useState([]);
+    const [allPosts, setAllPosts] = useState(null);
 
     useEffect(() => {
         const startShortPolling = setInterval(async () => {
@@ -38,10 +39,15 @@ const HomePage = () => {
                 </div>
             </div>
 
-            {/* maybe use suspense here, or show loading until response is here */}
-            <div className='postsTableContainer'>
-                <PostsTable allPosts={allPosts} username={username}/>
-            </div>
+            {allPosts ? 
+                <div className='postsTableContainer'>
+                    <PostsTable allPosts={allPosts} username={username}/>
+                </div>
+            :
+                <div className='spinner'>
+                    <CircularProgress />
+                </div>
+            }
 
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}
