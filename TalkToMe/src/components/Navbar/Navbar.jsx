@@ -1,11 +1,23 @@
 import './navbarStyles.css';
 
-import { strPost } from '../../axios-config';
+import { strGet, strPost } from '../../axios-config';
 import { Button, ButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+      const getUsername = async () => {
+        const response = await strGet('/getUsername');
+        const user = response.data;
+        setUsername(user);
+      }
+      
+      getUsername();
+    }, []);
     
     const logOut = async () => {
         const response = await strPost('/logout');
@@ -17,7 +29,12 @@ const Navbar = () => {
 
     return (
         <div className='titleSection'>
-          <div className='titleText'>
+          <div
+            className='titleText'
+            onClick={() => {
+              navigate('/home', {state: {username}});
+            }}
+          >
             Talk To Me
           </div>
 

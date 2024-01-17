@@ -70,7 +70,7 @@ const LoginPage = () => {
                     Login
                 </Button>
 
-                {showError && <h1>Error Registering</h1>}
+                {showError && <h1>Error Logging In</h1>}
             </div>
         </>
     );

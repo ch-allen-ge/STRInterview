@@ -46,6 +46,8 @@ const HomePage = () => {
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}
                 handleClose={() => {setShowNewPostModal(false)}}
+                makeNewPost={true}
+                postDetails={{}}
             />
         </div>
     );

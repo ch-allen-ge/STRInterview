@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
     Modal,
     FormGroup,
@@ -9,22 +9,46 @@ import {
     InputLabel,
     TextField
 } from '@mui/material';
-import { strPost } from '../../axios-config';
+import { strPatch, strPost } from '../../axios-config';
 import './newOrEditPostModal.css';
+import { memo } from 'react';
 
-const NewOrEditPostModal = ({modalOpen, handleClose}) => {
+const NewOrEditPostModal = ({modalOpen, handleClose, makeNewPost, postDetails}) => {
     const [source, setSource] = useState('');
     const [topic, setTopic] = useState('');
     const [content, setContent] = useState('');
 
+    useEffect(() => {
+        setSource(postDetails.source ?? '');
+        setTopic(postDetails.topic ?? '');
+        setContent(postDetails.content ?? '');
+    }, [postDetails]);
+
     const handleSubmit = () => {
-        strPost('/addPost', {
-            source,
-            topic,
-            content
-        });
-        handleClose();
-    }
+        try {
+            if (makeNewPost) {
+                strPost('/addPost', {
+                    source,
+                    topic,
+                    content
+                });
+            } else {
+                strPatch('/editPost', {
+                    source,
+                    topic,
+                    content,
+                    post_id: postDetails.post_id
+                });
+            }
+            setSource('');
+            setTopic('');
+            setContent('');
+            handleClose();
+        } catch (e) {
+            throw e;
+        }
+    };
+
 
     return (
         <Modal
@@ -32,7 +56,7 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
             onClose={handleClose}
         >
             <div className='modalContainer'>
-                <h1>Create Post</h1>
+                <h1>{makeNewPost ? 'Create Post' : 'Edit Post'}</h1>
 
                 <div className='postButtonContainer'>
                     <FormGroup>
@@ -40,7 +64,7 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                             <InputLabel id="source-label">Source</InputLabel>
                             <Select
                                 id='source'
-                                defaultValue=""
+                                value={source}
                                 onChange={(e) => setSource(e.target.value)}
                             >
                                 <MenuItem value={'Zeus'}>Zeus</MenuItem>
@@ -52,9 +76,24 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                             </Select>
                         </FormControl>
                         <br />
-                        <TextField label="Topic" variant="outlined" onChange={(e) => {setTopic(e.target.value)}}/>
+                        <TextField
+                            label="Topic"
+                            variant="outlined"
+                            value={topic}
+                            onChange={(e) => {
+                                setTopic(e.target.value)
+                            }}
+                        />
                         <br />
-                        <TextField label="Content" variant="outlined" multiline maxRows={4} onChange={(e) => {setContent(e.target.value)}}/>
+                        <TextField
+                            label="Content"
+                            variant="outlined"
+                            value={content}
+                            multiline maxRows={4}
+                            onChange={(e) => {
+                                setContent(e.target.value)
+                            }}
+                        />
                     </FormGroup>
                 </div>
                 <br />
@@ -62,11 +101,15 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
                     variant="contained"
                     onClick={handleSubmit}
                 >
-                    Post
+                    {makeNewPost ? 'Post' : 'Save'}
                 </Button>
             </div>
         </Modal>
     )
 }
 
-export default NewOrEditPostModal;
+const customComparator = (prevProps, nextProps) => {
+    return (JSON.stringify(nextProps.postDetails) === JSON.stringify(prevProps.postDetails)) && (nextProps.modalOpen === prevProps.modalOpen);
+};
+
+export default memo(NewOrEditPostModal, customComparator);

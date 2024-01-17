@@ -1,0 +1,36 @@
+.profilePageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%,-50%);
+
+    border: 3px solid cornflowerblue;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.flexRow {
+    display: flex;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.verticalLine {
+    border-left: 2px solid cornflowerblue;
+    height: 6rem;
+    margin: 0px 20px;
+}
+
+.count {
+    font-size: larger;
+}

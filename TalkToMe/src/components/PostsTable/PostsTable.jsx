@@ -20,6 +20,9 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
 import { strDelete } from '../../axios-config';
+import EditIcon from '@mui/icons-material/Edit';
+import NewOrEditPostModal from '../NewOrEditPostModal';
+import { useState } from 'react';
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -37,6 +40,7 @@ import { strDelete } from '../../axios-config';
             : (a, b) => -descendingComparator(a, b, orderBy);
     }
 
+    //doesnt work for dates, 
     function stableSort(array, comparator) {
         const stabilizedThis = array.map((el, index) => [el, index]);
         stabilizedThis.sort((a, b) => {
@@ -148,6 +152,8 @@ import { strDelete } from '../../axios-config';
     }
 
     const EnhancedTableToolbar = ({ allPosts, numSelected, selected, username, setSelected }) => {
+        const [showEditModal, setShowEditModal] = useState(false);
+        const [selectedPostDetails, setSelectedPostDetails] = useState({});
 
         const deleteSelected = async () => {
             //make sure user cant delete posts that dont belong to them
@@ -173,51 +179,79 @@ import { strDelete } from '../../axios-config';
             setSelected([]);
         }
 
+        const openEditModal = () => {
+            const selectedPost = allPosts.find((post) => post.post_id === selected[0]);
+            setSelectedPostDetails(selectedPost);
+
+            if (selectedPost.username === username) {
+                setShowEditModal(true);
+            } else {
+                console.log('cannot edit posts that are not yours!');
+            }
+        }
+
         return (
-          <Toolbar
-            sx={{
-              pl: { sm: 2 },
-              pr: { xs: 1, sm: 1 },
-              ...(numSelected > 0 && {
-                bgcolor: (theme) =>
-                  alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-              }),
-            }}
-          >
-            {numSelected > 0 ? (
-              <Typography
-                sx={{ flex: '1 1 100%' }}
-                color="inherit"
-                variant="subtitle1"
-                component="div"
-              >
-                {numSelected} selected
-              </Typography>
-            ) : (
-              <Typography
-                sx={{ flex: '1 1 100%' }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-              >
-                Posts
-              </Typography>
-            )}
-      
-            {numSelected > 0 && (
-              <Tooltip title="Delete">
-                <IconButton onClick={deleteSelected}>
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Toolbar>
+          <>
+            <Toolbar
+                sx={{
+                pl: { sm: 2 },
+                pr: { xs: 1, sm: 1 },
+                ...(numSelected > 0 && {
+                    bgcolor: (theme) =>
+                    alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                }),
+                }}
+            >
+                {numSelected > 0 ? (
+                <Typography
+                    sx={{ flex: '1 1 100%' }}
+                    color="inherit"
+                    variant="subtitle1"
+                    component="div"
+                >
+                    {numSelected} selected
+                </Typography>
+                ) : (
+                <Typography
+                    sx={{ flex: '1 1 100%' }}
+                    variant="h6"
+                    id="tableTitle"
+                    component="div"
+                >
+                    Posts
+                </Typography>
+                )}
+
+                {numSelected === 1 && (
+                <Tooltip title="Edit">
+                    <IconButton onClick={openEditModal}>
+                    <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                )}
+        
+                {numSelected > 0 && (
+                <Tooltip title="Delete">
+                    <IconButton onClick={deleteSelected}>
+                    <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+                )}
+            </Toolbar>
+
+            <NewOrEditPostModal
+                modalOpen={showEditModal}
+                handleClose={() => {setShowEditModal(false)}}
+                makeNewPost={false}
+                postDetails={selectedPostDetails}
+            />
+          </>
         );
     }
 
 const PostsTable = ({allPosts, username}) => {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('post_date');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -338,7 +372,7 @@ const PostsTable = ({allPosts, username}) => {
                     <TableCell align="right">{row.topic}</TableCell>
                     <TableCell align="right">{row.followers}</TableCell>
                     <TableCell align="right">{row.following}</TableCell>
-                    <TableCell align="right">{row.edited}</TableCell>
+                    <TableCell align="right">{String(row.edited ?? '')}</TableCell>
                   </TableRow>
                 );
               })}
