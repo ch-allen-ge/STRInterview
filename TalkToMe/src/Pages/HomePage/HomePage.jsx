@@ -45,7 +45,7 @@ const HomePage = () => {
                 </div>
             :
                 <div className='spinner'>
-                    <CircularProgress />
+                    <CircularProgress style={{'color': 'white'}}/>
                 </div>
             }
 
