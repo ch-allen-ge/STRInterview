@@ -131,6 +131,7 @@ import { useState } from 'react';
                   align={headCell.numeric ? 'right' : 'left'}
                   padding={headCell.disablePadding ? 'none' : 'normal'}
                   sortDirection={orderBy === headCell.id ? order : false}
+                  style={{textAlign: 'center'}}
                 >
                   <TableSortLabel
                     active={orderBy === headCell.id}
@@ -255,7 +256,7 @@ const PostsTable = ({allPosts, username}) => {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -363,16 +364,17 @@ const PostsTable = ({allPosts, username}) => {
                       id={labelId}
                       scope="row"
                       padding="none"
+                      style={{textAlign: 'center'}}
                     >
                       {row.username}
                     </TableCell>
-                    <TableCell align="right">{row.post_date}</TableCell>
-                    <TableCell align="right">{row.source}</TableCell>
-                    <TableCell align="right">{row.content}</TableCell>
-                    <TableCell align="right">{row.topic}</TableCell>
-                    <TableCell align="right">{row.followers}</TableCell>
-                    <TableCell align="right">{row.following}</TableCell>
-                    <TableCell align="right">{String(row.edited ?? '')}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.post_date}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.source}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.content}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.topic}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.followers}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{row.following}</TableCell>
+                    <TableCell align="right" style={{textAlign: 'center'}}>{String(row.edited ?? '')}</TableCell>
                   </TableRow>
                 );
               })}

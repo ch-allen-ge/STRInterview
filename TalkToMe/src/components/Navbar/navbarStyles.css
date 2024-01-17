@@ -1,11 +1,11 @@
 .titleSection {
     display: flex;
     align-items: center;
-    background: #212529;
+    background: #d4a373;
 }
 
 .titleText {
-    color:aliceblue;
+    color: #fefae0;
     cursor: pointer;
     font-size: xx-large;
     padding: 10px 0px;
@@ -15,9 +15,4 @@
 .navbarButtons {
     position: absolute;
     right: 30px;
-}
-
-.navButton {
-    color: aliceblue !important;
-    border-color: aliceblue !important;
 }

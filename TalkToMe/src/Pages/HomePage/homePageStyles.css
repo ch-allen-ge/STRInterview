@@ -1,5 +1,4 @@
 .homepage {
-    background-color: #495057;
     height: 100dvh;
 }
 
@@ -16,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #343a40;
+    background-color: #d5bdaf;
     border-radius: 1rem;
     width: fit-content;
     padding: 0.7rem;
@@ -24,13 +23,13 @@
 
 .profilePic {
     width: 2rem;
-    background-color: cornflowerblue;
+    background-color: #faedcd;
     border-radius: 1rem;
     margin-right: 1rem;
 }
 
 .makePostButton {
-    background-color: #6c757d;
+    background-color: #fefae0;
     border-radius: 1rem;
     padding: 0.5rem;
     cursor: pointer;
@@ -38,7 +37,7 @@
 }
 
 .makePostButton:hover {
-    background-color: #adb5bd;
+    background-color: #e9edc9;
 }
 
 .postsTableContainer {

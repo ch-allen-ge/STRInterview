@@ -43,6 +43,7 @@ const Navbar = () => {
               <Button
                   variant="text"
                   className="navButton"
+                  style={{color: '#fefae0', borderColor: '#fefae0'}}
                   onClick={() => {
                     navigate('/profile');
                   }}
@@ -53,6 +54,7 @@ const Navbar = () => {
               <Button
                   variant="text"
                   className="navButton"
+                  style={{color: '#fefae0', borderColor: '#fefae0'}}
                   onClick={logOut}
               >
                   Log Out
