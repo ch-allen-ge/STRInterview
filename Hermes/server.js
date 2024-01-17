@@ -12,7 +12,8 @@ const { registerUser } = require('./controllers/usersController');
 const { createNewUserProfile } = require('./controllers/profileController');
 const {
   addNewPost,
-  getAllPosts
+  getAllPosts,
+  deletePosts
 } = require('./controllers/postsController');
 const initializePassport = require('./passport-config');
 const session = require('express-session');
@@ -96,6 +97,16 @@ app.post('/addPost', checkAuthenticated, (req, res) => {
 app.get('/getAllPosts', checkAuthenticated, async (req, res) => {
   try {
     const response = await getAllPosts();
+    res.send(response);
+  } catch (e) {
+    throw e;
+  }
+});
+
+app.delete('/deletePosts', checkAuthenticated, async (req, res) => {
+  try {
+    const postsArray = req.body.postsArray;
+    const response = await deletePosts(postsArray);
     res.send(response);
   } catch (e) {
     throw e;

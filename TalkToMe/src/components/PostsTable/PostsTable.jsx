@@ -19,6 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
+import { strDelete } from '../../axios-config';
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -146,9 +147,32 @@ import { visuallyHidden } from '@mui/utils';
         );
     }
 
-    const EnhancedTableToolbar = (props) => {
-        const { numSelected } = props;
-      
+    const EnhancedTableToolbar = ({ allPosts, numSelected, selected, username, setSelected }) => {
+
+        const deleteSelected = async () => {
+            //make sure user cant delete posts that dont belong to them
+            for (const postIdToBeDeleted of selected) {
+                const postedPost = allPosts.find((post) => post.post_id === postIdToBeDeleted);
+                if (postedPost.username !== username) {
+                    console.log('cant delete posts that are not yours!');
+                    return;
+                }
+            }
+
+            //delete selected posts
+            const response = await strDelete('/deletePosts', {
+                data: {
+                    postsArray: selected
+                }
+            });
+
+            if (response && response.status !== 200) {
+                console.log('error deleting posts');
+            }
+
+            setSelected([]);
+        }
+
         return (
           <Toolbar
             sx={{
@@ -182,7 +206,7 @@ import { visuallyHidden } from '@mui/utils';
       
             {numSelected > 0 && (
               <Tooltip title="Delete">
-                <IconButton>
+                <IconButton onClick={deleteSelected}>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
@@ -191,7 +215,7 @@ import { visuallyHidden } from '@mui/utils';
         );
     }
 
-const PostsTable = ({allPosts}) => {
+const PostsTable = ({allPosts, username}) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -207,7 +231,7 @@ const PostsTable = ({allPosts}) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = allPosts.map((n) => n.id);
+      const newSelected = allPosts.map((n) => n.post_id);
       setSelected(newSelected);
       return;
     }
@@ -242,10 +266,6 @@ const PostsTable = ({allPosts}) => {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -264,7 +284,7 @@ const PostsTable = ({allPosts}) => {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar allPosts={allPosts} numSelected={selected.length} selected={selected} username={username} setSelected={setSelected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -316,8 +336,8 @@ const PostsTable = ({allPosts}) => {
                     <TableCell align="right">{row.source}</TableCell>
                     <TableCell align="right">{row.content}</TableCell>
                     <TableCell align="right">{row.topic}</TableCell>
-                    <TableCell align="right">0</TableCell>
-                    <TableCell align="right">0</TableCell>
+                    <TableCell align="right">{row.followers}</TableCell>
+                    <TableCell align="right">{row.following}</TableCell>
                     <TableCell align="right">{row.edited}</TableCell>
                   </TableRow>
                 );

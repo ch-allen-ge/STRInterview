@@ -40,3 +40,12 @@
 .makePostButton:hover {
     background-color: #adb5bd;
 }
+
+.postsTableContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.MuiBox-root {
+    width: 95% !important;
+}

@@ -32,8 +32,18 @@ const strPatch = async (url, payload) => {
     }
 }
 
+const strDelete = async (url, payload) => {
+    try {
+        const response = await client.delete(url, payload);
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}
+
 export {
     strGet,
     strPost,
-    strPatch
+    strPatch,
+    strDelete
 };

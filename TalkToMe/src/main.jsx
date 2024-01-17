@@ -4,6 +4,7 @@ import App from './App.jsx';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import LoginPage from './Pages/LoginPage/LoginPage'
 import HomePage from './Pages/HomePage/HomePage';
+import ProfilePage from './Pages/ProfilePage';
 
 import './index.css';
 
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+    errorElement: <h1>Error Loading Page</h1>
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
     errorElement: <h1>Error Loading Page</h1>
   }
 ]);

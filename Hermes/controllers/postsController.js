@@ -1,6 +1,7 @@
 const {
     addTheNewPost,
-    getAllThePosts
+    getAllThePosts,
+    deleteThePosts
 } = require('../services/posts.service');
 
 const addNewPost = async (username, postDetails) => {
@@ -21,7 +22,17 @@ const getAllPosts = async () => {
     }
 }
 
+const deletePosts = async(postsArray) => {
+    try {
+        const response = await deleteThePosts(postsArray);
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports = {
     addNewPost,
-    getAllPosts
+    getAllPosts,
+    deletePosts
 }

@@ -38,7 +38,10 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <PostsTable allPosts={allPosts}/>
+            {/* maybe use suspense here, or show loading until response is here */}
+            <div className='postsTableContainer'>
+                <PostsTable allPosts={allPosts} username={username}/>
+            </div>
 
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}

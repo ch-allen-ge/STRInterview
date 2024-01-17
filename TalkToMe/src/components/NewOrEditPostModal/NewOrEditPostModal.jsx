@@ -32,7 +32,7 @@ const NewOrEditPostModal = ({modalOpen, handleClose}) => {
             onClose={handleClose}
         >
             <div className='modalContainer'>
-                <h1>Make New Post</h1>
+                <h1>Create Post</h1>
 
                 <div className='postButtonContainer'>
                     <FormGroup>

@@ -27,7 +27,7 @@ const Navbar = () => {
                   variant="text"
                   className="navButton"
                   onClick={() => {
-                      
+                    navigate('/profile');
                   }}
               >
                   Profile
