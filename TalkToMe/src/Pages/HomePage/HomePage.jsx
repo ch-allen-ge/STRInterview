@@ -6,6 +6,7 @@ import NewOrEditPostModal from '../../components/NewOrEditPostModal';
 import { strGet } from '../../axios-config';
 import PostsTable from '../../components/PostsTable';
 import CircularProgress from '@mui/material/CircularProgress';
+import DataChart from '../../components/DataChart';
 
 const HomePage = () => {
     const username = useLocation().state.username;
@@ -48,6 +49,8 @@ const HomePage = () => {
                     <CircularProgress style={{'color': 'white'}}/>
                 </div>
             }
+
+            {allPosts &&  <DataChart />}
 
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}

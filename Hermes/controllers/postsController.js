@@ -2,7 +2,8 @@ const {
     addTheNewPost,
     getAllThePosts,
     deleteThePosts,
-    editThePost
+    editThePost,
+    getTheSourceFrequency
 } = require('../services/posts.service');
 
 const addNewPost = async (username, postDetails) => {
@@ -17,6 +18,15 @@ const addNewPost = async (username, postDetails) => {
 const getAllPosts = async () => {
     try {
         const response = await getAllThePosts();
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}
+
+const getSourceFrequency = async () => {
+    try {
+        const response = await getTheSourceFrequency();
         return response;
     } catch (e) {
         throw e;
@@ -44,6 +54,7 @@ const editPost = async (post_id, postDetails) => {
 module.exports = {
     addNewPost,
     getAllPosts,
+    getSourceFrequency,
     deletePosts,
     editPost
 }

@@ -17,6 +17,12 @@ const getAllThePosts = async () => {
     return await executeQuery(query);
 }
 
+const getTheSourceFrequency = async () => {
+    const query = 'select source, count(*) from posts where source = ANY ($1) group by source';
+    const values = [['Zeus', 'Poseidon', 'Hades', 'Hercules', 'Kratos', 'Boy']];
+    return await executeQuery(query, values);
+}
+
 const deleteThePosts = async (postsArray) => {
     const query = 'delete from posts where post_id = ANY ($1)';
     const values = [postsArray];
@@ -26,6 +32,7 @@ const deleteThePosts = async (postsArray) => {
 module.exports = {
     addTheNewPost,
     getAllThePosts,
+    getTheSourceFrequency,
     deleteThePosts,
     editThePost
 }

@@ -19,6 +19,7 @@ const {
 const {
   addNewPost,
   getAllPosts,
+  getSourceFrequency,
   deletePosts,
   editPost
 } = require('./controllers/postsController');
@@ -114,6 +115,15 @@ app.get('/getFollowing', checkAuthenticated, async (req, res) => {
   try {
     const username = req.user.username;
     const response = await getFollowing(username);
+    res.send(response);
+  } catch (e) {
+    throw e;
+  }
+});
+
+app.get('/getSourceFrequency', checkAuthenticated, async (req, res) => {
+  try {
+    const response = await getSourceFrequency();
     res.send(response);
   } catch (e) {
     throw e;
