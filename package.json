@@ -1,0 +1,13 @@
+{
+  "name": "strinterview",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "docker:build": "docker-compose -p strinterview build",
+    "docker:down": "docker-compose -p strinterview down",
+    "docker:up": "docker-compose -p strinterview up"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: strdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  backend:
+    build:
+      context: ./Hermes
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    environment:
+      PORT: 3000
+      PG_HOST: 'host.docker.internal'
+      PG_PORT: 5432
+      PG_USER: 'postgres'
+      PG_PASSWORD: 'password'
+      PG_DATABASE: 'strdb'
+      SESSION_SECRET: '6ZkkZ9U:iWmFQ2?,qhUn*ya#0W))1{'
+  frontend:
+    build:
+      context: ./TalkToMe
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"

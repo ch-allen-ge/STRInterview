@@ -40,7 +40,7 @@ import { useState } from 'react';
             : (a, b) => -descendingComparator(a, b, orderBy);
     }
 
-    //doesnt work for dates, 
+    //doesnt work for dates
     function stableSort(array, comparator) {
         const stabilizedThis = array.map((el, index) => [el, index]);
         stabilizedThis.sort((a, b) => {
@@ -61,7 +61,7 @@ import { useState } from 'react';
             label: 'Username',
         },
         {
-          id: 'postDate',
+          id: 'post_date',
           numeric: false,
           disablePadding: false,
           label: 'Post Date',

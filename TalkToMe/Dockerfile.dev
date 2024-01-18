@@ -1,0 +1,12 @@
+FROM node:bullseye-slim
+
+#make folder, cd into it, -p=pathname
+#RUN mkdir -p /app
+WORKDIR /app
+
+#copy all files into current cd'd folder
+COPY . .
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]

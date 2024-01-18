@@ -22,7 +22,7 @@ const RegisterPage = () => {
         .catch(() => setShowError(true));
 
         if (response && response.status === 200) {
-            navigate('/home');
+            navigate('/home', {state: {username}});
         }
     };
 
@@ -52,6 +52,7 @@ const RegisterPage = () => {
                 <TextField
                     className=""
                     label='password'
+                    type='password'
                     variant="outlined"
                     autoComplete='off'
                     onChange={(e) => {

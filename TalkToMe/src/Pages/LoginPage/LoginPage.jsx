@@ -52,6 +52,7 @@ const LoginPage = () => {
                 <TextField
                     className=""
                     label='password'
+                    type='password'
                     variant="outlined"
                     autoComplete='off'
                     onChange={(e) => {
