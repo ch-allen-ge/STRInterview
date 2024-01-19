@@ -17,14 +17,6 @@ services:
     ports:
       - "3000:3000"
     restart: on-failure
-    environment:
-      PORT: 3000
-      PG_HOST: 'host.docker.internal'
-      PG_PORT: 5432
-      PG_USER: 'postgres'
-      PG_PASSWORD: 'password'
-      PG_DATABASE: 'strdb'
-      SESSION_SECRET: '6ZkkZ9U:iWmFQ2?,qhUn*ya#0W))1{'
   frontend:
     build:
       context: ./TalkToMe
