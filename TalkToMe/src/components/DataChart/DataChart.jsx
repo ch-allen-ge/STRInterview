@@ -22,22 +22,8 @@ ChartJS.register(
     Legend
 );
 
-//get array of number of times god mentioned from db
-const DataChart = () => {
-    const [mentionedObj, setMentionedObj] = useState({});
-
-    useEffect(() => {
-        const startShortPolling = setInterval(async () => {
-            const response = await strGet('/getSourceFrequency');
-            const mentioned = response.data;
-            var mentionedObject = mentioned.reduce((obj, item) => Object.assign(obj, { [item.source]: item.count }), {});
-            setMentionedObj(mentionedObject);
-        }, 1000);
-
-        return () => {
-            clearInterval(startShortPolling);
-        };
-    }, []);
+const DataChart = ({sourceFrequency}) => {
+    const mentionedObj = sourceFrequency.reduce((obj, item) => Object.assign(obj, { [item.source]: item.count }), {});
 
     const options = {
         responsive: true,

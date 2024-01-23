@@ -1,11 +1,9 @@
 create table posts (
     post_id serial primary key,
-    post_date date,
+    post_date date with time zone,
     source varchar,
     content varchar,
     topic varchar,
-    num_followers integer,
-    num_following integer,
     edited boolean,
     username varchar
 );

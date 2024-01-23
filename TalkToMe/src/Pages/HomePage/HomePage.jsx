@@ -12,19 +12,23 @@ const HomePage = () => {
     const username = useLocation().state.username;
 
     const [showNewPostModal, setShowNewPostModal] = useState(false);
-    const [allPosts, setAllPosts] = useState(null);
+    const [allPosts, setAllPosts] = useState([]);
+    const [listening, setListening ] = useState(false);
+    const [sourceFrequency, setSourceFrequency] = useState([]);
 
     useEffect(() => {
-        const startShortPolling = setInterval(async () => {
-            const response = await strGet('/getAllPosts');
-            const allThePosts = response.data;
-            setAllPosts(allThePosts);
-        }, 1000);
-
-        return () => {
-            clearInterval(startShortPolling);
-        };
-    });
+        if (!listening) {
+            const events = new EventSource('http://localhost:3000/getAllPostsAndSourceFrequency', { withCredentials: true });
+            
+            events.onmessage = (event) => {
+              const parsedData = JSON.parse(event.data);
+              setAllPosts(parsedData.allCurrentPosts);
+              setSourceFrequency(parsedData.sourceFrequency)
+            };
+      
+            setListening(true);
+        }
+    }, [listening, allPosts]);
 
     return (
         <div className='homepage'>
@@ -50,7 +54,7 @@ const HomePage = () => {
                 </div>
             }
 
-            {allPosts &&  <DataChart />}
+            {allPosts &&  <DataChart sourceFrequency={sourceFrequency} />}
 
             <NewOrEditPostModal
                 modalOpen={showNewPostModal}
